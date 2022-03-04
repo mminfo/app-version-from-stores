@@ -13,7 +13,7 @@ async function getVersion(browser, url, selector, evaluateFn) {
 }
 
 async function getVersionFromAppStore(browser, id) {
-  const url = `https://apps.apple.com/br/app/${id}`;
+  const url = `https://apps.apple.com/br/app/id${id}`;
   const selector = '.whats-new__latest__version';
   const evaluateFn = (selector) =>
     document.querySelector(selector).innerText.split(' ')[1];
