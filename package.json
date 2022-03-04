@@ -1,0 +1,18 @@
+{
+  "name": "bot-get-version-from-store",
+  "version": "1.0.0",
+  "description": "Bot que busca a versão disponível do aplicativo nas lojas",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Willian Ricardo<willianricardo.dev@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "puppeteer": "^13.4.1"
+  }
+}
