@@ -1,8 +1,7 @@
-import express from 'express';
-import dotenv from 'dotenv';
+import axios from 'axios';
 import cors from 'cors';
-import { getBrowser } from './browser.js';
-import { getVersionFromAppStore, getVersionFromPlayStore } from './version.js';
+import dotenv from 'dotenv';
+import express from 'express';
 
 dotenv.config();
 
@@ -10,17 +9,39 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+async function getVersionFromAppStore(id) {
+  try {
+    const url = `https://apps.apple.com/br/app/id${id}`;
+    const body = await axios.get(url).then((res) => res.data);
+    const selector = 'whats-new__latest__version">Versão ';
+    return body.split(selector)[1].split('</p>')[0];
+  } catch (error) {
+    console.log(error);
+    return '';
+  }
+}
+
+async function getVersionFromPlayStore(id) {
+  try {
+    const url = `https://play.google.com/store/apps/details?id=${id}`;
+    const body = await axios.get(url).then((res) => res.data);
+    const selector = '<div class="IQ1z0d"><span class="htlgb">';
+    return body.split(selector)[4].split('</span>')[0];
+  } catch (error) {
+    console.log(error);
+    return '';
+  }
+}
+
 app.post('/', async (req, res) => {
   const { appStoreID, playStoreID } = req.body;
 
-  const browser = await getBrowser();
-  const appStoreVersion = await getVersionFromAppStore(browser, appStoreID);
-  const playStoreVersion = await getVersionFromPlayStore(browser, playStoreID);
-  await browser.close();
+  const ios = await getVersionFromAppStore(appStoreID);
+  const android = await getVersionFromPlayStore(playStoreID);
 
   return res.json({
-    appStoreVersion,
-    playStoreVersion,
+    ios,
+    android,
   });
 });
 
