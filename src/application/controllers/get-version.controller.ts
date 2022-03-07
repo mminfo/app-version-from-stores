@@ -19,7 +19,7 @@ class GetVersionController {
 			return response.status(500).json(version.left);
 		}
 
-		return response.status(200).json(version);
+		return response.status(200).json(version.right);
 	}
 }
 
