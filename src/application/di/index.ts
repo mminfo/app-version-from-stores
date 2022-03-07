@@ -1,11 +1,11 @@
 import axios from 'axios';
 
 import { ApiVersionRepository } from '../../data/repositories/api-version.repository';
-import { GetApiVersionUseCase } from '../../domain/usecases/get-api-version.usecase';
-import { GetVersionsController } from '../controllers/get-version.controller';
+import { GetVersionUseCase } from '../../domain/usecases/get-version.usecase';
+import { GetVersionController } from '../controllers/get-version.controller';
 
 const apiVersionRepository = new ApiVersionRepository(axios);
-const getApiVersionUseCase = new GetApiVersionUseCase(apiVersionRepository);
-const getVersionsController = new GetVersionsController(getApiVersionUseCase);
+const getVersionUseCase = new GetVersionUseCase(apiVersionRepository);
+const getVersionController = new GetVersionController(getVersionUseCase);
 
-export { getVersionsController };
+export { getVersionController };
