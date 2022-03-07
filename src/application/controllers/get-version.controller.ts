@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { isLeft } from 'fp-ts/lib/Either';
 
 import { GetVersionUseCase } from '../../domain/usecases/get-version.usecase';
 
@@ -13,6 +14,10 @@ class GetVersionController {
 			ios,
 			android,
 		});
+
+		if (isLeft(version)) {
+			return response.status(500).json(version.left);
+		}
 
 		return response.status(200).json(version);
 	}

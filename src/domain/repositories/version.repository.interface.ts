@@ -1,4 +1,7 @@
+import { Either } from 'fp-ts/lib/Either';
+
 import { VersionEntity } from '../entities/version.entity';
+import { AppError } from '../errors/app.error';
 
 export interface IGetVersionDTO {
 	ios: string;
@@ -6,7 +9,10 @@ export interface IGetVersionDTO {
 }
 
 export interface IVersionRepository {
-	getVersion({ ios, android }: IGetVersionDTO): Promise<VersionEntity>;
-	getAndroidVersion(id: string): Promise<string>;
-	getIosVersion(id: string): Promise<string>;
+	getVersion({
+		ios,
+		android,
+	}: IGetVersionDTO): Promise<Either<AppError, VersionEntity>>;
+	getAndroidVersion(id: string): Promise<Either<AppError, string>>;
+	getIosVersion(id: string): Promise<Either<AppError, string>>;
 }
